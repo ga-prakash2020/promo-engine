@@ -45,6 +45,23 @@ namespace PromoEngine.Tests
             Assert.AreEqual(0, promotionEngine.DiscountedAmount);
         }
 
+        [Test]
+        public void TestScenarioB_SingleSku_Applied()
+        {
+            SetProductQuantity('A', 5);
+            SetProductQuantity('B', 5);
+            SetProductQuantity('C', 1);
+
+            promotionEngine.ApplyPromotions(activePromotions, productCart);
+
+            double originalTotal = 420;
+            double discountedTotal = 370;
+            double expectedDiscount = originalTotal - discountedTotal;
+
+            Assert.True(promotionEngine.IsPromoApplied);
+            Assert.AreEqual(expectedDiscount, promotionEngine.DiscountedAmount);
+        }
+
         private void SetProductQuantity(char product, int quantity)
         {
             foreach(var item in this.productCart)
