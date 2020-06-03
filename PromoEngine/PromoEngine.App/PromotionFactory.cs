@@ -12,13 +12,13 @@ namespace PromoEngine.App
             switch (promoDef.PromoType)
             {
                 case PromotionTypes.SingleSku:
-                    return new SingleSku();
+                    return new SingleSku(promoDef);
                 case PromotionTypes.DualProducts:
-                    return new DualProduct();
+                    return new DualProduct(promoDef);
                 // case Percentage
-                default:
-                    return new SingleSku();
             }
+
+            throw new ArgumentException("Unable to create PromotionType, invalid promotion type");
         }
     }
 }
