@@ -38,7 +38,6 @@ namespace PromoEngine.Tests
             SetProductQuantity('A', 1);
             SetProductQuantity('B', 1);
             SetProductQuantity('C', 1);
-            SetProductQuantity('D', 1);
 
             promotionEngine.ApplyPromotions(activePromotions, productCart);
 
