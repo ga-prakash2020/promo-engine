@@ -8,34 +8,54 @@ namespace PromoEngine.Tests
     public class Tests
     {
         PromotionEngine promotionEngine;
+        List<OrderDetail> productCart;
+        List<PromoDefinition> activePromotions;
 
         [SetUp]
         public void Setup()
         {
             promotionEngine = new PromotionEngine();
-        }
 
-        [Test]
-        public void NoPromotionApplied()
-        {
-            var productCart = new List<OrderDetail>()
+            this.productCart = new List<OrderDetail>()
             {
-                new OrderDetail {Product = 'A', OriginalUnitPrice = 50, Quantity = 1 },
-                new OrderDetail {Product = 'B', OriginalUnitPrice = 30, Quantity = 1 },
-                new OrderDetail {Product = 'C', OriginalUnitPrice = 20, Quantity = 1 },
-                //new OrderDetail {Product = 'D', OriginalUnitPrice = 15, Quantity = 1 },
+                new OrderDetail {Product = 'A', OriginalUnitPrice = 50 },
+                new OrderDetail {Product = 'B', OriginalUnitPrice = 30 },
+                new OrderDetail {Product = 'C', OriginalUnitPrice = 20 },
+                new OrderDetail {Product = 'D', OriginalUnitPrice = 15 },
             };
 
-            var activePromotions = new List<PromoDefinition>()
+            activePromotions = new List<PromoDefinition>()
             {
                 new PromoDefinition { PromoType = PromotionTypes.SingleSku, ProductList = new[] { 'A'}, Quantity = 3, Value = 130 },
                 new PromoDefinition { PromoType = PromotionTypes.SingleSku, ProductList = new[] { 'B'}, Quantity = 2, Value = 45 },
                 new PromoDefinition { PromoType = PromotionTypes.DualProducts, ProductList = new[] { 'C', 'D' }, Quantity = 1, Value = 30 },
             };
+        }
+
+        [Test]
+        public void TestScenarioA_NoPromotions_Applied()
+        {
+            SetProductQuantity('A', 1);
+            SetProductQuantity('B', 1);
+            SetProductQuantity('C', 1);
+            SetProductQuantity('D', 1);
 
             promotionEngine.ApplyPromotions(activePromotions, productCart);
 
             Assert.False(promotionEngine.IsPromoApplied);
             Assert.AreEqual(0, promotionEngine.DiscountedAmount);
         }
+
+        private void SetProductQuantity(char product, int quantity)
+        {
+            foreach(var item in this.productCart)
+            {
+                if(item.Product == product)
+                {
+                    item.Quantity = quantity;
+                    return;
+                }
+            }
+        }
+    }
 }
