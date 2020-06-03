@@ -1438,6 +1438,16 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XPath.XmlDocument.dll": {}
         }
+      },
+      "PromoEngine.App/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v3.1",
+        "compile": {
+          "bin/placeholder/PromoEngine.App.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/PromoEngine.App.dll": {}
+        }
       }
     }
   },
@@ -5200,12 +5210,18 @@
         "system.xml.xpath.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xpath.xmldocument.nuspec"
       ]
+    },
+    "PromoEngine.App/1.0.0": {
+      "type": "project",
+      "path": "../PromoEngine.App/PromoEngine.App.csproj",
+      "msbuildProject": "../PromoEngine.App/PromoEngine.App.csproj"
     }
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Microsoft.NET.Test.Sdk >= 16.2.0",
       "NUnit3TestAdapter >= 3.15.1",
+      "PromoEngine.App >= 1.0.0",
       "nunit >= 3.12.0"
     ]
   },
@@ -5239,7 +5255,11 @@
       },
       "frameworks": {
         "netcoreapp3.1": {
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\git-repos\\my-git-repo\\assignment\\promo-engine\\PromoEngine\\PromoEngine.App\\PromoEngine.App.csproj": {
+              "projectPath": "C:\\git-repos\\my-git-repo\\assignment\\promo-engine\\PromoEngine\\PromoEngine.App\\PromoEngine.App.csproj"
+            }
+          }
         }
       },
       "warningProperties": {
