@@ -1,6 +1,7 @@
 ﻿using PromoEngine.App.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace PromoEngine.App
@@ -23,7 +24,28 @@ namespace PromoEngine.App
 
         public double ApplyPromotion(List<OrderDetail> orderDetails)
         {
-            throw new NotImplementedException();
+            var prod1Detail = orderDetails.Where(x => x.Product == product1).FirstOrDefault();
+            var prod2Detail = orderDetails.Where(x => x.Product == product2).FirstOrDefault();
+
+            if (prod1Detail == null || prod2Detail == null) return 0;
+
+            var originalPrice = (prod1Detail.Quantity * prod1Detail.OriginalUnitPrice) +
+                (prod2Detail.Quantity * prod2Detail.OriginalUnitPrice);
+
+            this.OriginalPrice = originalPrice;
+
+            var count = Math.Min(prod1Detail.Quantity, prod2Detail.Quantity);
+
+            var priceAfterDiscount = (count * this.promoPrice) + ((prod1Detail.Quantity - count) * prod1Detail.OriginalUnitPrice)
+                + ((prod2Detail.Quantity - count) * prod2Detail.OriginalUnitPrice);
+
+            this.PriceAfterDiscount = priceAfterDiscount;
+
+            var discount = originalPrice - priceAfterDiscount;
+
+            if (discount == 0) this.PriceAfterDiscount = this.OriginalPrice;
+
+            return discount;
         }
     }
 }
