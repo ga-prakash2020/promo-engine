@@ -12,7 +12,20 @@ namespace PromoEngine.App
 
         public void ApplyPromotions(List<PromoDefinition> activePromotions, List<OrderDetail> productCart)
         {
-
+            foreach (var promo in activePromotions)
+            {
+                IPromotion promotion = PromotionFactory.GetFactory(promo);
+                // no need to apply further promotions if a promotion is already applied
+                if (!this.IsPromoApplied)
+                {
+                    this.DiscountedAmount = promotion.ApplyPromotion(productCart);
+                    // mark promotion applied
+                    if (this.DiscountedAmount > 0)
+                    {
+                        this.IsPromoApplied = true;
+                    }
+                }
+            }
         }
     }
 }
